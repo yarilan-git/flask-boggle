@@ -1,0 +1,49 @@
+td  {
+    width: 100px;
+    height: 100px;
+    background-color: blue;
+    color: white;
+    text-align: center;
+    font-size: 2rem;   
+}
+
+.page   {
+    position: relative;
+    left: 100px;
+}
+
+table   {
+    box-shadow: 5px 10px 3px gray;
+}
+
+h1  {
+    border: 1px solid black;
+    border-radius: 3px;
+    width: 500px;
+    margin-left: 10px;
+    text-align: center;
+}
+
+form {
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+form.hidden {
+    display: none;
+}
+
+div.show {
+    width: fit-content;
+    height: 30px;
+    border: 1px solid black;
+    margin-top: 50px;
+    margin-left: 150px;
+    color: black;
+}
+
+div.hidden {
+    display: none;
+}
+
+
