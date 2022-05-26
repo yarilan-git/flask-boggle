@@ -27,6 +27,7 @@ h1  {
 form {
     margin-top: 20px;
     margin-left: 10px;
+    
 }
 
 form.hidden {
@@ -44,6 +45,29 @@ div.show {
 
 div.hidden {
     display: none;
+}
+
+.stats {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.board {
+    display: inline-block;
+}
+
+.statistic {
+    margin-left: 40%;
+    font-weight: bold;
+}
+
+h1.statistic {
+    margin-top: 30px;   
+}
+
+.numbers {
+    border : 1px solid black;
+    border-radius: 3px;
 }
 
 

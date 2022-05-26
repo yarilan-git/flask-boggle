@@ -5,33 +5,39 @@
 {% block body %} 
 
 <div class="page">
-    <h1>Let's play Boggle</h1>
-    <table>
-        <tbody>
-            {% for row in session['board'] %} 
-                <tr>
-                    {% for cell in row %} 
-                    <td>{{cell}}</td>                    
-                    {% endfor%}
-                </tr>        
-            {% endfor %}        
-        </tbody>
-    </table>
-    <form method="POST" class="show">
-        <label for="a_guess">Enter a word</label>
-        <input type="text" name="a_guess" id="a_guess">
-        <button type="submit">Submit your guess</button>
-    </form>
-    <div id="result" class="show"></div>
-    <div id="score"></div>
-    <div id="games">Games played: {{games}}</div>
-    <div id="high_score">High score: {{high_score}}</div>
+    
+    <div class="board">
+        <h1>Let's play Boggle</h1>
+        <table>
+            <tbody>
+                {% for row in session['board'] %} 
+                    <tr>
+                        {% for cell in row %} 
+                        <td>{{cell}}</td>                    
+                        {% endfor%}
+                    </tr>        
+                {% endfor %}        
+            </tbody>
+        </table>
+        
+        <form method="POST" class="show">
+            <label for="word">Enter a word</label>
+            <input type="text" name="word" id="word">
+            <button type="submit">Submit</button>
+        </form>
+        <div id="result" class="show"></div>
+    </div>
+    <div class="stats">
+        <h1>Statistics</h1>
+        <div class="statistic" id="score"></div>
+        <div class="statistic" id="games">Games played: {{games}}</div>
+        <div class="statistic" id="high_score">High score: {{high_score}}</div>
+        <h1  id="time_left"></h1>
+    </div>
 
     
 </div>
 
 
 {% endblock %}
-
-<!-- action="/check_guess" -->
     

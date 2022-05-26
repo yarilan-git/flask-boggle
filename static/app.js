@@ -2,51 +2,67 @@
 $("button").on('click', checkWord);
 $("input").on('focus', function() {$("input").val("")});
 $("#result").attr("class", "hidden");
+
 let score = 0;
 let games = 0;
-var timeoutID = setTimeout(stopGame, 60000);
+let timer = 60;
+let timeoutID = setTimeout(stopGame, 60000);
+let intervalID = setInterval(function() {$("#time_left").text(`Time left: ${timer--} seconds`);}, 1000);
+let usedWords = [];
+
 
 function stopGame() {
+    // At the end of a game:
+    //    1) Disables the word entry form
+    //    2) Announces that the game is over
+    //    3) Stops the remaining time display
+    //    4) Sends the game's statistics to the server for storage
+
     $("form").attr("class", "hidden");
     $("#result").text("Game is over");
-
+    $("#time_left").text('Time left: 0 seconds');
+    clearInterval(intervalID);
     updateStats();
-
 }
 
 async function updateStats() {
-    // let data = `'${score}'`;
-    let res = await axios.get('/update_stats', {params : {score : score}});      
+    // Updates the game's statistics on the server
+    // and displays the overall game activity
+
+    let res = await axios.post('/update_stats', {score: score});  
     $("#games").text(`Games played: ${res.data['games']}`);
     $("#high_score").text(`High score: ${res.data['high_score']}`);
 }
 
 
 async function checkWord(e) {
-    e.preventDefault();
-    console.log($("input").val())
-    guess=$("input").val();
-    // let data = `{"word" : "${guess}"}`;
+    // 1) If the word entered has already been used, notifies the user
+    //    and takes no further actions
+    // 2) Asks the server to check the validity of the new word, informs the user
+    //    what the result was, and updates the score
 
-    let endPoint = '/check_guess';
+    e.preventDefault();
+    word=$("input").val();
+    if (usedWords.includes(word)) {
+        $("#result").text("You already used this word. Try again.");
+        return;    
+    }
+
+    usedWords.push(word);
     let msg;
-    // console.log("data: ", data, "end point: ", endPoint);
-    let result = await axios.post('/check_guess', {a_guess : guess});
-    console.log("result back on client was:" , result.data.result);    
+    let result = await axios.post('/check_word', {a_word : word});
     switch (result.data.result) {
         case "ok":
-            score += guess.length;    
-            msg = `You guessed correctly`;
+            score += word.length;    
+            msg = `You entered a valid word`;
             break;
         case "not-on-board":
-            msg = "Your guess is a valid word but not on the board";
+            msg = "Your word is a valid dictionary word but not on the board";
             break;
         case "not-word":
-            msg = "Your guess is not a valid word"
+            msg = "Your word is not a valid word"
             break;
     }
-    console.log("result from axios is:", result);
-    console.log("the message is:", msg);
 
     $("#result").text(msg);
     $("#result").attr("class", "show");
