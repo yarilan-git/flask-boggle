@@ -18,7 +18,8 @@ def setup_the_board():
     session['board'] = boggle_game.make_board()
     return render_template('game_board.html', title='Boggle game board', games=games_played, high_score=high_score)
 
-@app.route('/check_word', methods=["POST"])
+@app.route('/check_word')
+# @app.route('/check_word', methods=["POST"])
 def validate_word():
     """Checks if a word provided by the user is valid, i.e. it exists in 
        the dictionary and exists in the current game board.

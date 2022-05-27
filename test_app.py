@@ -30,10 +30,11 @@ class FlaskTests(TestCase):
                                     ["C", "A", "T", "T", "T"], 
                                     ["C", "A", "T", "T", "T"]]
        
-        req=client.post('/check_word', data={'a_word': 'A'})
+        req=client.get('/check_word')
+        # req=client.get('/check_word', data={'a_word': 'A'})
         print("in begining of test")
         print("req:", req)
-        # self.assertEqual(req.json['result'], 'ok')
+        self.assertEqual(req, 'ok')
         # with app.test_client() as client:
            
             
