@@ -51,7 +51,7 @@ async function checkWord(e) {
     usedWords.push(word);
     let msg;
     let result = await axios.get('/check_word', {params :{a_word : word}});
-    // let result = await axios.post('/check_word', {a_word : word});
+   
     switch (result.data.result) {
         case "ok":
             score += word.length;    

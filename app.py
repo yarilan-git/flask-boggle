@@ -1,10 +1,9 @@
-from flask import Flask, session, render_template, jsonify, request, flash
+from flask import Flask, session, render_template, jsonify, request
 from boggle import Boggle
-# import pdb
+import pdb
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = '123456'
-
 
 
 boggle_game = Boggle()
@@ -18,15 +17,14 @@ def setup_the_board():
     session['board'] = boggle_game.make_board()
     return render_template('game_board.html', title='Boggle game board', games=games_played, high_score=high_score)
 
-@app.route('/check_word')
-# @app.route('/check_word', methods=["POST"])
+@app.route("/check_word")
 def validate_word():
     """Checks if a word provided by the user is valid, i.e. it exists in 
        the dictionary and exists in the current game board.
     """
     board=session['board']
-    res=request.json["a_word"]
-    return jsonify({"result" : boggle_game.check_valid_word(board, res)})
+    word=request.args["a_word"]
+    return jsonify({"result" : boggle_game.check_valid_word(board, word)})
 
 @app.route('/update_stats', methods=['POST'])
 def upadate_stats ():
@@ -37,8 +35,15 @@ def upadate_stats ():
 
     games_played += 1
     if request.json['score'] > high_score:
+        print('inside update_stats')
+        pdb.set_trace()
+       
         high_score = request.json['score']    
     return jsonify({"high_score" : high_score, "games" : games_played})
+
+
+
+
     
     
 

@@ -1,7 +1,8 @@
 from unittest import TestCase
 from app import app
-from flask import session
+from flask import Flask, session, render_template, jsonify, request
 from boggle import Boggle
+import pdb
 
 
 class FlaskTests(TestCase):
@@ -30,22 +31,29 @@ class FlaskTests(TestCase):
                                     ["C", "A", "T", "T", "T"], 
                                     ["C", "A", "T", "T", "T"]]
        
-        req=client.get('/check_word')
-        # req=client.get('/check_word', data={'a_word': 'A'})
-        print("in begining of test")
-        print("req:", req)
-        self.assertEqual(req, 'ok')
-        # with app.test_client() as client:
+        req=client.get('/check_word?a_word=a')
+        res=req.get_data(as_text=True)
+        self.assertIn('ok', res)
+
+        req=client.get('/check_word?a_word=door')
+        res=req.get_data(as_text=True)
+        self.assertIn('not-on-board', res)
+
+        req=client.get('/check_word?a_word=rdfv')
+        res=req.get_data(as_text=True)
+        self.assertEqual (req.json['result'], 'not-word')
+
+    def test_update_stats(self):
+        with app.test_client() as client:
+            client.post('/update_stats', data={'score':'5'})
            
-            
-            # req=client.post('/check_word', data={'a_word': 'A'})
-        #     print("in begining of test")
-        #     ret=req.get_data(as_text=True)
-        #     self.assertIn("ok", ret)
-        #     print("in the test")
+            # self.assertEqual(res.json['high_score'], '5')
+            # self.assertEqual(res.json['games'], '1')
 
 
 
+            # {"high_score" : high_score, "games" : games_played})
 
 
-# upadate_stats ()
+
+        
