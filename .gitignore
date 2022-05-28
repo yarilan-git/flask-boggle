@@ -2,4 +2,6 @@ venv/
 __pycache__
 before-css-changes/
 before-adding-tests/
+.vscode/
+.gitignore
 

@@ -1,6 +1,5 @@
 from flask import Flask, session, render_template, jsonify, request
 from boggle import Boggle
-import pdb
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = '123456'
@@ -34,10 +33,7 @@ def upadate_stats ():
     global high_score
 
     games_played += 1
-    if request.json['score'] > high_score:
-        print('inside update_stats')
-        pdb.set_trace()
-       
+    if int(request.json['score']) > high_score:       
         high_score = request.json['score']    
     return jsonify({"high_score" : high_score, "games" : games_played})
 

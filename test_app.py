@@ -2,15 +2,9 @@ from unittest import TestCase
 from app import app
 from flask import Flask, session, render_template, jsonify, request
 from boggle import Boggle
-import pdb
 
 
 class FlaskTests(TestCase):
-
-    # TODO -- write tests for every view function / feature!
-
-
-# setup_the_board()
 
     def test_setup(self):
         with app.test_client() as client:
@@ -45,14 +39,9 @@ class FlaskTests(TestCase):
 
     def test_update_stats(self):
         with app.test_client() as client:
-            client.post('/update_stats', data={'score':'5'})
-           
-            # self.assertEqual(res.json['high_score'], '5')
-            # self.assertEqual(res.json['games'], '1')
-
-
-
-            # {"high_score" : high_score, "games" : games_played})
+            res=client.post('/update_stats', json={'score':'5'})
+            self.assertEqual(res.json['high_score'], '5')
+            self.assertEqual(res.json['games'], 1)
 
 
 

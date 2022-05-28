@@ -38,8 +38,8 @@ async function updateStats() {
 async function checkWord(e) {
     // 1) If the word entered has already been used, notifies the user
     //    and takes no further actions
-    // 2) Asks the server to check the validity of the new word, informs the user
-    //    what the result was, and updates the score
+    // 2) Otherwise, asks the server to check the validity of the new word, 
+    //    informs the user what the result was, and updates the score
 
     e.preventDefault();
     word=$("input").val();
